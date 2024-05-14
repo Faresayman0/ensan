@@ -206,7 +206,7 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             ElevatedButton(
               onPressed: () {
-                fetchDeviceByMacAddress(context, "101010");
+                fetchDeviceByMacAddress(context, "E098062399C8");
               },
               child: Center(child: Text("Show Location")),
             ),
