@@ -9,7 +9,8 @@ import 'package:test/Bmi_Screen.dart';
 
 class Navbar_Roots extends StatefulWidget {
   final User currentUser; // Use the User object here
-  const Navbar_Roots({Key? key, required this.currentUser, required userName}) : super(key: key);
+  const Navbar_Roots({Key? key, required this.currentUser, required userName})
+      : super(key: key);
 
   @override
   State<Navbar_Roots> createState() => _Navbar_RootsState();
@@ -72,7 +73,9 @@ class _Navbar_RootsState extends State<Navbar_Roots> {
 
   List<Widget> get screens {
     return [
-      Home_Screen(userName: userName, currentUser: widget.currentUser), // Pass the whole user
+      Home_Screen(
+          userName: userName,
+          currentUser: widget.currentUser), // Pass the whole user
       Messages_Screen(),
       Schedule_Screen(),
       Bmi_Screen(),

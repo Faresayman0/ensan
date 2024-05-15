@@ -21,7 +21,7 @@ class _Personal_CareState extends State<Personal_Care> {
   void initState() {
     super.initState();
     // Fetch device data when the widget is initialized
-    fetchDeviceByMacAddress("E098062399C8");
+    fetchDeviceByMacAddress("2222");
   }
 
   Future<void> fetchDeviceByMacAddress(String macaddress) async {

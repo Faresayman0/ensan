@@ -51,8 +51,12 @@ Future<void> fetchDeviceByMacAddress(
 
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
+    print('Response Data: $data');
     if (data['data']['deviceByMacaddress'] != null) {
       final deviceData = data['data']['deviceByMacaddress'];
+      print('Device Data: $deviceData');
+      print('Latitude: ${deviceData['latitude']}');
+      print('Longitude: ${deviceData['longitude']}');
       showDialog(
         context: context,
         builder: (context) {
@@ -65,8 +69,8 @@ Future<void> fetchDeviceByMacAddress(
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      launchGoogleMaps(
-                          deviceData['latitude'], deviceData['longitude']);
+                      launchGoogleMaps(context, deviceData['latitude'],
+                          deviceData['longitude']);
                     },
                     child: Text('Open in Google Maps'),
                   ),
@@ -206,7 +210,7 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             ElevatedButton(
               onPressed: () {
-                fetchDeviceByMacAddress(context, "E098062399C8");
+                fetchDeviceByMacAddress(context, "2222");
               },
               child: Center(child: Text("Show Location")),
             ),
@@ -270,12 +274,24 @@ class _Home_ScreenState extends State<Home_Screen> {
   }
 }
 
-void launchGoogleMaps(String latitude, String longitude) async {
+void launchGoogleMaps(
+    BuildContext context, String latitude, String longitude) async {
   final url =
-      'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
+      'https://www.google.com/maps/dir/?api=1&destination=$latitude,$longitude';
+  print('Attempting to launch Google Maps with URL: $url');
+  try {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch $url')),
+      );
+      print('Could not launch $url');
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error: $e')),
+    );
+    print('Error: $e');
   }
 }
