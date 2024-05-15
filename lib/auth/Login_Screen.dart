@@ -70,14 +70,15 @@ class _Login_ScreenState extends State<Login_Screen> {
 
           print('Name: $name, Email: $email, Device: $device');
 
-          if (name != null && email != null && device != null && id != null && token != null) {
-            final User currentUser = User(id: id, name: name, email: email, device: device,);
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => Navbar_Roots(currentUser: currentUser, userName: name)),
-            );
-          } else {
-            showError('No valid user information available.');
-          }
+        if (name != null && email != null && device != null && id != null && token != null) {
+  final User currentUser = User(id: id, name: name, email: email, device: device);
+  Navigator.of(context).pushReplacement(
+    MaterialPageRoute(builder: (context) => Navbar_Roots(currentUser: currentUser, userName: name, device: device)),
+  );
+} else {
+  showError('No valid user information available.');
+}
+
         } else {
           showError('Login failed, please try again.');
         }

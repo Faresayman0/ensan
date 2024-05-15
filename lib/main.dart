@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return GraphQLProvider(
       client: GraphQLConfiguration.client(),
       child: MaterialApp(
-       debugShowCheckedModeBanner:false ,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           // This is the theme of your application.
           //
@@ -43,5 +43,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

@@ -2,9 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
+import 'package:test/Home_Screen.dart';
 
 class Personal_Care extends StatefulWidget {
-  const Personal_Care({super.key});
+  const Personal_Care({
+    super.key,
+    required this.currentDevice,
+  });
+  final String currentDevice;
 
   @override
   State<Personal_Care> createState() => _Personal_CareState();
@@ -21,7 +26,7 @@ class _Personal_CareState extends State<Personal_Care> {
   void initState() {
     super.initState();
     // Fetch device data when the widget is initialized
-    fetchDeviceByMacAddress("2222");
+    fetchDeviceByMacAddress(widget.currentDevice);
   }
 
   Future<void> fetchDeviceByMacAddress(String macaddress) async {
@@ -48,7 +53,9 @@ class _Personal_CareState extends State<Personal_Care> {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      if (data['data']['deviceByMacaddress'] != null) {
+      if (data.containsKey('data') &&
+          data['data'] != null &&
+          data['data']['deviceByMacaddress'] != null) {
         setState(() {
           deviceData = data['data']['deviceByMacaddress'];
 

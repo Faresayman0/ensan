@@ -9,7 +9,12 @@ import 'package:test/Bmi_Screen.dart';
 
 class Navbar_Roots extends StatefulWidget {
   final User currentUser; // Use the User object here
-  const Navbar_Roots({Key? key, required this.currentUser, required userName})
+  final String device;
+  const Navbar_Roots(
+      {Key? key,
+      required this.currentUser,
+      required userName,
+      required this.device})
       : super(key: key);
 
   @override
@@ -79,7 +84,9 @@ class _Navbar_RootsState extends State<Navbar_Roots> {
       Messages_Screen(),
       Schedule_Screen(),
       Bmi_Screen(),
-      Personal_Care(),
+      Personal_Care(
+        currentDevice: widget.device,
+      ),
       Settings_Screen(),
     ];
   }

@@ -52,7 +52,9 @@ Future<void> fetchDeviceByMacAddress(
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
     print('Response Data: $data');
-    if (data['data']['deviceByMacaddress'] != null) {
+    if (data.containsKey('data') &&
+        data['data'] != null &&
+        data['data']['deviceByMacaddress'] != null) {
       final deviceData = data['data']['deviceByMacaddress'];
       print('Device Data: $deviceData');
       print('Latitude: ${deviceData['latitude']}');
@@ -81,8 +83,22 @@ Future<void> fetchDeviceByMacAddress(
         },
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('No device found with that MAC address')),
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('No Data Found'),
+            content: Text('No device data found for this user.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
       );
     }
   } else {
@@ -210,7 +226,7 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             ElevatedButton(
               onPressed: () {
-                fetchDeviceByMacAddress(context, "2222");
+                fetchDeviceByMacAddress(context, widget.currentUser.device);
               },
               child: Center(child: Text("Show Location")),
             ),
